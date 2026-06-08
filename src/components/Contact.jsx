@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion'
-import { FiMail, FiPhone, FiMapPin, FiArrowUpRight, FiDownload } from 'react-icons/fi'
+import { FiMail, FiMapPin, FiArrowUpRight, FiDownload } from 'react-icons/fi'
 import { profile } from '../data/info'
 import Reveal from './Reveal'
 
 const details = [
   { Icon: FiMail, label: profile.email, href: `mailto:${profile.email}` },
-  { Icon: FiPhone, label: profile.phone, href: `tel:${profile.phone.replace(/\s+/g, '')}` },
   { Icon: FiMapPin, label: profile.location, href: null },
 ]
 

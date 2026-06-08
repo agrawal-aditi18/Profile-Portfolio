@@ -20,7 +20,6 @@ export const profile = {
   tagline:
     'I build fast, scalable, and reliable web applications   from pixel-perfect React interfaces to production-grade APIs deployed on the cloud.',
   email: 'aditiagrawalsofficial@gmail.com',
-  phone: '+91 7728831054',
   location: 'Jaipur, India',
   resume: 'https://drive.google.com/file/d/1KPr9ztEv-xE16khPIkdcGVQIOH0uMs5A/view?usp=sharing', // Google Drive link
 }
@@ -47,9 +46,9 @@ export const about = {
   ],
   stats: [
     { value: '9.6', label: 'CGPA / 10' },
-    { value: '2+', label: 'Internships' },
-    { value: '20+', label: 'APIs Built' },
-    { value: '3+', label: 'Production Projects' },
+    { value: '200+', label: 'DSA Problems Solved' },
+    { value: '12', label: 'Coding Events' },
+    { value: '10', label: 'Projects' },
   ],
 }
 
