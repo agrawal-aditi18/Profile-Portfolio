@@ -17,7 +17,7 @@ export function useMediaQuery(query) {
   return matches
 }
 
-// True when the user prefers reduced motion — used to skip heavy animations.
+// True when the user prefers reduced motion   used to skip heavy animations.
 export function usePrefersReducedMotion() {
   return useMediaQuery('(prefers-reduced-motion: reduce)')
 }

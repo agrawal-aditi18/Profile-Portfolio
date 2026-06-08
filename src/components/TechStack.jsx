@@ -57,7 +57,7 @@ export default function TechStack() {
 
   return (
     <section id="skills" className="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 md:py-32">
-      <SectionHeading kicker="05 — Toolbox" align="center">
+      <SectionHeading kicker="05   Toolbox" align="center">
         Tech <span className="text-gradient">Stack</span>
       </SectionHeading>
 

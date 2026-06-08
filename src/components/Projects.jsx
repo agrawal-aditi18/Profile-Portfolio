@@ -6,7 +6,7 @@ import SectionHeading from './SectionHeading'
 import Reveal from './Reveal'
 import { useMediaQuery } from '../lib/hooks'
 
-// A stylised "screenshot" placeholder — a browser frame with the project
+// A stylised "screenshot" placeholder   a browser frame with the project
 // name on its gradient. Swap for a real <img> by editing this component.
 function Preview({ project }) {
   return (
@@ -19,16 +19,22 @@ function Preview({ project }) {
           {project.name.toLowerCase().replace(/\s+/g, '-')}.app
         </span>
       </div>
-      <div className={`relative grid aspect-[16/10] place-items-center bg-gradient-to-br ${project.gradient}`}>
-        <div className="absolute inset-0 bg-grid opacity-40" />
-        <div className="relative text-center">
-          <div className="text-3xl font-bold tracking-tight text-white/90 sm:text-4xl">
-            {project.name}
-          </div>
-          <div className="mt-1 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-            {project.category}
-          </div>
-        </div>
+      <div className={`relative grid aspect-[16/10] place-items-center bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+        {project.image ? (
+          <img src={project.image} alt={project.name} className="h-full w-full object-cover" />
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-grid opacity-40" />
+            <div className="relative text-center">
+              <div className="text-3xl font-bold tracking-tight text-white/90 sm:text-4xl">
+                {project.name}
+              </div>
+              <div className="mt-1 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+                {project.category}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
@@ -61,7 +67,7 @@ function ProjectCard({ project }) {
         ))}
       </div>
 
-      <div className="mt-auto flex gap-3 pt-6">
+      <div className="mt-auto flex justify-between gap-3 pt-6">
         <a
           href={project.links.github}
           target="_blank"
@@ -142,7 +148,7 @@ function HorizontalGallery() {
     >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-8">
-          <SectionHeading kicker="04 — Work">
+          <SectionHeading kicker="04   Work">
             My <span className="text-gradient">Work</span>
           </SectionHeading>
         </div>

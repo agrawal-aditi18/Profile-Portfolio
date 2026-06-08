@@ -13,7 +13,7 @@ export default function Experience() {
 
   return (
     <section id="experience" className="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 md:py-32">
-      <SectionHeading kicker="03 — Journey" align="center">
+      <SectionHeading kicker="03   Journey" align="center">
         My career &amp; <span className="text-gradient">experience</span>
       </SectionHeading>
 

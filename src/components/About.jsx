@@ -45,18 +45,44 @@ export default function About() {
     <section id="about" className="relative mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 md:py-32">
       <div className="grid gap-12 md:grid-cols-[1.15fr_0.85fr] md:gap-16">
         <div>
-          <SectionHeading kicker="01 — About">
+          <SectionHeading kicker="01   About">
             Turning ideas into <span className="text-gradient">working products</span>
           </SectionHeading>
 
           <Reveal delay={0.1}>
-            <p className="mt-8 text-base leading-relaxed text-slate-300 md:text-lg">
-              {about.paragraph}
-            </p>
+            <ul className="mt-8 space-y-3">
+              {about.points.map((point) => (
+                <li key={point} className="flex items-start gap-3 text-slate-300 text-base leading-relaxed md:text-lg">
+                  <span className="mt-1 shrink-0 text-accent font-bold">•</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
+        </div>
+
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5">
+            {about.stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-accent/40"
+              >
+                <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-accent/10 blur-2xl transition-opacity group-hover:opacity-100 sm:opacity-0" />
+                <div className="text-4xl font-bold text-gradient sm:text-5xl">
+                  <StatNumber value={stat.value} />
+                </div>
+                <div className="mt-2 text-sm text-slate-400">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
 
           <Reveal delay={0.2}>
-            <ul className="mt-8 space-y-3">
+            <ul className="space-y-3">
               {achievements.map((a) => (
                 <li key={a} className="flex items-start gap-3 text-slate-400">
                   <FiAward className="mt-1 shrink-0 text-accent" />
@@ -65,25 +91,6 @@ export default function About() {
               ))}
             </ul>
           </Reveal>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 self-start sm:gap-5">
-          {about.stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-accent/40"
-            >
-              <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-accent/10 blur-2xl transition-opacity group-hover:opacity-100 sm:opacity-0" />
-              <div className="text-4xl font-bold text-gradient sm:text-5xl">
-                <StatNumber value={stat.value} />
-              </div>
-              <div className="mt-2 text-sm text-slate-400">{stat.label}</div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

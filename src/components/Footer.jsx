@@ -1,5 +1,6 @@
 import { FiArrowUpRight, FiArrowUp } from 'react-icons/fi'
 import { profile, socials } from '../data/info'
+import LikeButton from './LikeButton'
 
 const socialLinks = [
   { label: 'GitHub', href: socials.github },
@@ -39,14 +40,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-6 text-xs text-slate-500 sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} {profile.name}. Designed &amp; built with React,
-            Tailwind &amp; Framer Motion.
-          </p>
-          <a href="#top" className="inline-flex items-center gap-1.5 transition-colors hover:text-accent">
-            Back to top <FiArrowUp />
-          </a>
+        <div className="mt-10 flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-6">
+          <LikeButton />
+          <div className="flex flex-col items-center justify-between gap-4 text-xs text-slate-500 sm:flex-row w-full">
+            <p>
+              © {new Date().getFullYear()} {profile.name}. Designed &amp; built with React,
+              Tailwind &amp; Framer Motion.
+            </p>
+            <a href="#top" className="inline-flex items-center gap-1.5 transition-colors hover:text-accent">
+              Back to top <FiArrowUp />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

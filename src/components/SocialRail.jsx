@@ -10,7 +10,7 @@ const items = [
 ]
 
 // Fixed vertical social rail (desktop) on the left, plus a vertical
-// "RESUME" tab on the right — both hidden on small screens.
+// "RESUME" tab on the right   both hidden on small screens.
 export default function SocialRail() {
   return (
     <>

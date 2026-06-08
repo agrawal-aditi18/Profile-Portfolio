@@ -17,7 +17,7 @@ export default function WhatIDo() {
       </span>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <SectionHeading kicker="02 — Services" align="center">
+        <SectionHeading kicker="02   Services" align="center">
           What I <span className="text-gradient">Do</span>
         </SectionHeading>
 

@@ -1,7 +1,7 @@
 // ============================================================================
 //  EDIT YOUR CONTENT HERE
 //  Everything the site displays comes from this file. Update text, links,
-//  projects, and skills below — no need to touch the components.
+//  projects, and skills below   no need to touch the components.
 // ============================================================================
 
 export const profile = {
@@ -10,7 +10,7 @@ export const profile = {
   // photoUrl: drop a square photo in /public (e.g. public/me.jpg) and set
   // this to './me.jpg' to show it inside the hero avatar ring. Leave null
   // to show the animated initials badge instead.
-  photoUrl: null,
+  photoUrl: './my.jpg.jpeg',
   roles: [
     'Full-Stack Developer',
     'MERN Stack Specialist',
@@ -18,7 +18,7 @@ export const profile = {
     'Problem Solver',
   ],
   tagline:
-    'I build fast, scalable, and reliable web applications — from pixel-perfect React interfaces to production-grade APIs deployed on the cloud.',
+    'I build fast, scalable, and reliable web applications   from pixel-perfect React interfaces to production-grade APIs deployed on the cloud.',
   email: 'aditiagrawalsofficial@gmail.com',
   phone: '+91 7728831054',
   location: 'Jaipur, India',
@@ -35,12 +35,21 @@ export const socials = {
 
 export const about = {
   heading: 'About Me',
-  paragraph: `I'm a Full-Stack Developer and final-year B.Tech Computer Science (AI) student at SKIT, Jaipur, with a 9.6 CGPA. I specialise in the MERN stack — crafting responsive React interfaces with Redux and Tailwind on the front end, and engineering RESTful APIs with Node.js, Express, and MongoDB on the back. Across two internships I've shipped full-stack platforms to AWS, written 11+ production APIs with edge-case validation, and owned the complete SDLC — from requirement analysis through testing, deployment, and production debugging. I care about clean architecture, fast UIs, and turning ambitious ideas into real, working products.`,
+  points: [
+    'Full-Stack Developer and final-year B.Tech Computer Science (AI) student at SKIT, Jaipur with 9.6 CGPA',
+    'MERN stack specialization   crafting responsive React interfaces with Redux and Tailwind on the front end',
+    'Engineering RESTful APIs with Node.js, Express, and MongoDB on the back',
+    'Shipped full-stack platforms to AWS EC2 across two production internships',
+    'Written 20+ production-grade APIs with comprehensive edge-case validation and testing',
+    'Owned complete SDLC   from requirement analysis through testing, deployment, and production debugging',
+    'AI integrations expertise   leveraging APIs like Gemini for intelligent features and recommendations',
+    'Passionate about clean architecture, fast UIs, and transforming ambitious ideas into real, working products',
+  ],
   stats: [
     { value: '9.6', label: 'CGPA / 10' },
     { value: '2+', label: 'Internships' },
-    { value: '11+', label: 'APIs Built' },
-    { value: '3+', label: 'Major Projects' },
+    { value: '20+', label: 'APIs Built' },
+    { value: '3+', label: 'Production Projects' },
   ],
 }
 
@@ -48,21 +57,21 @@ export const services = [
   {
     title: 'Full-Stack (MERN)',
     subtitle: 'End-to-end web platforms',
-    desc: 'Architecting complete applications — from React front ends to Node/Express APIs and MongoDB — deployed and debugged in production on AWS EC2.',
+    desc: 'Architecting complete applications   from React front ends to Node/Express APIs and MongoDB   deployed and debugged in production on AWS EC2.',
     tech: ['React', 'Node.js', 'Express', 'MongoDB'],
     icon: 'layers',
   },
   {
     title: 'Frontend Engineering',
     subtitle: 'Fast, responsive interfaces',
-    desc: 'Building accessible, pixel-perfect UIs with React, Redux Toolkit, and Tailwind — optimised with memoization and debouncing for buttery-smooth UX.',
+    desc: 'Building accessible, pixel-perfect UIs with React, Redux Toolkit, and Tailwind   optimised with memoization and debouncing for buttery-smooth UX.',
     tech: ['React.js', 'Redux', 'Tailwind', 'JavaScript'],
     icon: 'code',
   },
   {
     title: 'Backend & APIs',
     subtitle: 'Robust server-side systems',
-    desc: 'Designing RESTful APIs with edge-case validation, JWT auth, and thorough Postman testing — structured around clean, maintainable patterns.',
+    desc: 'Designing RESTful APIs with edge-case validation, JWT auth, and thorough Postman testing   structured around clean, maintainable patterns.',
     tech: ['Express', 'REST', 'JWT', 'MongoDB'],
     icon: 'server',
   },
@@ -100,12 +109,6 @@ export const timeline = [
     org: 'SKIT, Jaipur',
     desc: 'Began Computer Science engineering, diving deep into C++, data structures, and the fundamentals of building real software.',
   },
-  {
-    period: '2022',
-    title: 'Senior Secondary — 93%',
-    org: 'Noble Kingdom Public School (CBSE)',
-    desc: 'Completed Class 12 with 93%, building the analytical and mathematical base that led me into engineering.',
-  },
 ]
 
 export const projects = [
@@ -116,7 +119,8 @@ export const projects = [
     desc: 'An AI-powered movie platform integrating the Gemini API for intelligent recommendations, with Firebase auth, Redux Toolkit (memoized state), TMDB real-time data, and protected routing for a robust, production-ready UI.',
     tech: ['React.js', 'Redux Toolkit', 'Firebase', 'Gemini API', 'TailwindCSS', 'TMDB API'],
     gradient: 'from-rose-500/30 via-red-500/10 to-transparent',
-    links: { github: 'https://github.com/agrawal-aditi18', live: '#' },
+    image: './netflix.png',
+    links: { github: 'https://github.com/agrawal-aditi18', live: 'https://netflixgpt-805e6.web.app/' },
   },
   {
     id: '02',
@@ -125,6 +129,7 @@ export const projects = [
     desc: "A developers' networking platform deployed on AWS EC2 with Nginx for load handling. Features JWT authentication, connection-building, and real-time live chat — built end to end across the complete SDLC.",
     tech: ['React.js', 'Redux', 'Node.js', 'Express', 'MongoDB', 'AWS EC2', 'JWT'],
     gradient: 'from-cyan-500/30 via-blue-500/10 to-transparent',
+    image: './Devenue.png',
     links: { github: 'https://github.com/agrawal-aditi18', live: '#' },
   },
   {
@@ -134,6 +139,7 @@ export const projects = [
     desc: 'A YouTube-inspired streaming app using the YouTube Data API, with debounced API calls to cut redundant requests and a live-chat simulation powered by centralised Redux Toolkit state — tuned for smooth performance.',
     tech: ['React.js', 'Redux Toolkit', 'TailwindCSS', 'React Router', 'YouTube API'],
     gradient: 'from-violet-500/30 via-fuchsia-500/10 to-transparent',
+    image: './YouTubeClone.png',
     links: { github: 'https://github.com/agrawal-aditi18', live: '#' },
   },
 ]
@@ -162,9 +168,10 @@ export const skills = [
 ]
 
 export const achievements = [
-  'Meritorious Student — top academic performance in Semester 1',
-  'Team Leader — shortlisted for Smart India Hackathon (SIH) Prelims 2025',
-  'International Mathematics Olympiad (IMO) Medalist — 9th grade',
+  '200+ DSA problems solved on LeetCode and other competitive platforms',
+  'Meritorious Student   top academic performance in Semester 1',
+  'Team Leader   shortlisted for Smart India Hackathon (SIH) Prelims 2025',
+  'International Mathematics Olympiad (IMO) Medalist   9th grade',
 ]
 
 export const navLinks = [

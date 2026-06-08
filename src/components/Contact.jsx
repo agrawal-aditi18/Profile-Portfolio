@@ -22,7 +22,7 @@ export default function Contact() {
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.35em] text-accent">
-            06 — Contact
+            06   Contact
           </p>
         </Reveal>
 
