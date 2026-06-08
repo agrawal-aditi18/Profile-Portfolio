@@ -2,27 +2,108 @@ import { useState, useEffect } from 'react'
 import { FiHeart } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 
+// Load from environment variables (Vite prefixes with VITE_)
+const JSONBIN_ID = import.meta.env.VITE_JSONBIN_ID
+const JSONBIN_API_KEY = import.meta.env.VITE_JSONBIN_API_KEY
+
 export default function LikeButton() {
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
   const [showMessage, setShowMessage] = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  // Initialize like state from localStorage on mount
+  // Get unique user ID
+  const getUserId = () => {
+    let userId = localStorage.getItem('portfolio_user_id')
+    if (!userId) {
+      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      localStorage.setItem('portfolio_user_id', userId)
+    }
+    return userId
+  }
+
+  // Fetch like count from JSONBin
   useEffect(() => {
-    const hasLiked = localStorage.getItem('portfolio_liked') === 'true'
-    const count = parseInt(localStorage.getItem('portfolio_likes') || '0', 10)
-    setLiked(hasLiked)
-    setLikeCount(count)
+    if (!JSONBIN_ID) {
+      console.warn('⚠️ JSONBin ID not configured. Like counter may not work.')
+      setLoading(false)
+      return
+    }
+
+    const fetchLikes = async () => {
+      try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+          headers: {
+            'X-Master-Key': JSONBIN_API_KEY || '',
+          },
+        })
+        const data = await response.json()
+        const record = data.record || { likes: 0, users: [] }
+
+        const userId = getUserId()
+        const hasUserLiked = record.users?.includes(userId)
+
+        setLiked(hasUserLiked)
+        setLikeCount(record.likes || 0)
+      } catch (error) {
+        console.log('Could not fetch likes:', error)
+        // Fallback to localStorage
+        const localCount = parseInt(localStorage.getItem('portfolio_likes_global') || '0', 10)
+        setLikeCount(localCount)
+      }
+      setLoading(false)
+    }
+
+    fetchLikes()
+
+    // Poll for updates every 5 seconds (optional: shows others' likes in real-time)
+    const interval = setInterval(fetchLikes, 5000)
+    return () => clearInterval(interval)
   }, [])
 
-  const handleLike = () => {
-    if (!liked) {
+  const handleLike = async () => {
+    if (!liked && !loading) {
+      const userId = getUserId()
       const newCount = likeCount + 1
+
+      try {
+        // Update JSONBin with new like count
+        await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': JSONBIN_API_KEY,
+          },
+          body: JSON.stringify({
+            likes: newCount,
+            users: [...new Set([...(await getLikersFromBin()), userId])],
+          }),
+        })
+      } catch (error) {
+        console.log('Could not update likes:', error)
+      }
+
       setLiked(true)
       setLikeCount(newCount)
-      localStorage.setItem('portfolio_liked', 'true')
-      localStorage.setItem('portfolio_likes', String(newCount))
       setShowMessage(false)
+
+      // Fallback to localStorage
+      localStorage.setItem(`portfolio_liked_${userId}`, 'true')
+      localStorage.setItem('portfolio_likes_global', String(newCount))
+    }
+  }
+
+  const getLikersFromBin = async () => {
+    try {
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+        headers: {
+          'X-Master-Key': JSONBIN_API_KEY,
+        },
+      })
+      const data = await response.json()
+      return data.record?.users || []
+    } catch {
+      return []
     }
   }
 
@@ -39,7 +120,7 @@ export default function LikeButton() {
       )}
       <motion.button
         onClick={handleLike}
-        disabled={liked}
+        disabled={liked || loading}
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
@@ -61,7 +142,7 @@ export default function LikeButton() {
           />
         </motion.div>
         <span className={`font-mono text-sm font-semibold ${liked ? 'text-rose-400' : 'text-slate-400'}`}>
-          {likeCount}
+          {loading ? '...' : likeCount}
         </span>
       </motion.button>
       {liked && (
