@@ -22,7 +22,7 @@ export const profile = {
   email: 'aditiagrawalsofficial@gmail.com',
   phone: '+91 7728831054',
   location: 'Jaipur, India',
-  resume: './resume.pdf', // lives in /public/resume.pdf
+  resume: 'https://drive.google.com/file/d/1KPr9ztEv-xE16khPIkdcGVQIOH0uMs5A/view?usp=sharing', // Google Drive link
 }
 
 export const socials = {
