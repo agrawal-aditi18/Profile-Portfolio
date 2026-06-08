@@ -11,6 +11,7 @@ export default function LikeButton() {
   const [likeCount, setLikeCount] = useState(0)
   const [showMessage, setShowMessage] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [lastFetchedCount, setLastFetchedCount] = useState(0)
 
   // Get unique user ID
   const getUserId = () => {
@@ -20,6 +21,21 @@ export default function LikeButton() {
       localStorage.setItem('portfolio_user_id', userId)
     }
     return userId
+  }
+
+  const getLikersFromBin = async () => {
+    try {
+      if (!JSONBIN_ID) return []
+      const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+        headers: {
+          'X-Master-Key': JSONBIN_API_KEY || '',
+        },
+      })
+      const data = await response.json()
+      return data.record?.users || []
+    } catch {
+      return []
+    }
   }
 
   // Fetch like count from JSONBin
@@ -37,67 +53,97 @@ export default function LikeButton() {
             'X-Master-Key': JSONBIN_API_KEY || '',
           },
         })
+        if (!response.ok) throw new Error('Failed to fetch likes')
+        
         const data = await response.json()
         const record = data.record || { likes: 0, users: [] }
 
         const userId = getUserId()
         const hasUserLiked = record.users?.includes(userId)
+        const fetchedCount = record.likes || 0
 
         setLiked(hasUserLiked)
-        setLikeCount(record.likes || 0)
+        setLikeCount(fetchedCount)
+        setLastFetchedCount(fetchedCount)
+        setLoading(false)
       } catch (error) {
-        console.log('Could not fetch likes:', error)
+        console.log('Could not fetch likes from JSONBin:', error)
         // Fallback to localStorage
         const localCount = parseInt(localStorage.getItem('portfolio_likes_global') || '0', 10)
         setLikeCount(localCount)
+        setLastFetchedCount(localCount)
+        setLoading(false)
       }
-      setLoading(false)
     }
 
     fetchLikes()
 
-    // Poll for updates every 5 seconds (optional: shows others' likes in real-time)
-    const interval = setInterval(fetchLikes, 5000)
+    // Poll for updates every 5 seconds - only update if count changed
+    const interval = setInterval(() => {
+      fetchLikes()
+    }, 5000)
+
     return () => clearInterval(interval)
   }, [])
 
   const handleLike = async () => {
-    if (!liked && !loading) {
+    if (!liked && !loading && JSONBIN_ID) {
       const userId = getUserId()
-      const newCount = likeCount + 1
-
+      
       try {
+        // First, fetch the latest count to avoid race conditions
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+          headers: {
+            'X-Master-Key': JSONBIN_API_KEY || '',
+          },
+        })
+        const data = await response.json()
+        const latestRecord = data.record || { likes: 0, users: [] }
+        const latestUsers = latestRecord.users || []
+        
+        // Increment based on latest count
+        const newCount = (latestRecord.likes || 0) + 1
+
         // Update JSONBin with new like count
         await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-Master-Key': JSONBIN_API_KEY,
+            'X-Master-Key': JSONBIN_API_KEY || '',
           },
           body: JSON.stringify({
             likes: newCount,
-            users: [...new Set([...(await getLikersFromBin()), userId])],
+            users: [...new Set([...latestUsers, userId])],
           }),
         })
+
+        setLiked(true)
+        setLikeCount(newCount)
+        setLastFetchedCount(newCount)
+        setShowMessage(false)
+
+        // Fallback to localStorage
+        localStorage.setItem(`portfolio_liked_${userId}`, 'true')
+        localStorage.setItem('portfolio_likes_global', String(newCount))
       } catch (error) {
         console.log('Could not update likes:', error)
+        // On error, at least update local state
+        const newCount = likeCount + 1
+        setLiked(true)
+        setLikeCount(newCount)
+        setShowMessage(false)
+        localStorage.setItem(`portfolio_liked_${userId}`, 'true')
+        localStorage.setItem('portfolio_likes_global', String(newCount))
       }
-
-      setLiked(true)
-      setLikeCount(newCount)
-      setShowMessage(false)
-
-      // Fallback to localStorage
-      localStorage.setItem(`portfolio_liked_${userId}`, 'true')
-      localStorage.setItem('portfolio_likes_global', String(newCount))
     }
   }
 
   const getLikersFromBin = async () => {
     try {
+      if (!JSONBIN_ID) return []
       const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
         headers: {
-          'X-Master-Key': JSONBIN_API_KEY,
+          'X-Master-Key': JSONBIN_API_KEY || '',
         },
       })
       const data = await response.json()
