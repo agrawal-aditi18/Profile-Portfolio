@@ -85,7 +85,7 @@ export const services = [
 
 export const timeline = [
   {
-    period: 'NOW',
+    period: 'PRESENT',
     title: 'B.Tech — Computer Science (AI)',
     org: 'SKIT, Jaipur · CGPA 9.6 / 10',
     desc: 'Final-year student specialising in Artificial Intelligence, with a strong foundation in DSA, DBMS, OS, and full-stack web development.',
