@@ -27,7 +27,7 @@ export const profile = {
 export const socials = {
   github: 'https://github.com/agrawal-aditi18',
   // TODO: replace with your real profile URLs (these are best guesses).
-  linkedin: 'https://www.linkedin.com/in/aditi-agrawal',
+  linkedin: 'https://www.linkedin.com/in/aditiagrawal001/',
   leetcode: 'https://leetcode.com/u/aditiagrawal/',
   email: `mailto:aditiagrawalsofficial@gmail.com`,
 }
